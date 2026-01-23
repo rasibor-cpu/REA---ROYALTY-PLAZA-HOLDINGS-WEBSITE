@@ -159,7 +159,7 @@
     .hero p{
       margin:0 0 16px;
       color:var(--muted);
-      max-width: 60ch;
+      max-width: 72ch;
       line-height:1.55;
       font-size:14px;
     }
@@ -288,6 +288,13 @@
       border-radius: 16px;
       border:1px dashed rgba(215,179,92,.30);
       opacity:.8;
+      pointer-events:none;
+    }
+    .coverImg{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
     }
     .content{padding:14px; display:flex; flex-direction:column; gap:8px; flex:1}
     .title{
@@ -313,6 +320,7 @@
     .btnRow{display:flex; gap:8px}
     .btn.sm{padding:10px 10px; border-radius:14px; font-size:13px}
     .btn.sm.primary{font-weight:800}
+    .btn[disabled]{opacity:.55; cursor:not-allowed}
 
     /* Footer */
     footer{
@@ -485,6 +493,7 @@
       .toolbar .field:nth-child(1){grid-column: 1 / -1;}
       .card{grid-column: span 6;}
       .modalBody{grid-template-columns: 1fr; }
+      .howGrid, .whoGrid, .nextGrid{grid-template-columns: 1fr !important;}
     }
     @media (max-width: 640px){
       .brand{min-width:auto}
@@ -541,10 +550,11 @@
     <section class="hero" aria-label="Hero">
       <div class="hero-inner">
         <div>
-          <h2>Buy ready-to-use digital products that save time, reduce risk, and improve outcomes.</h2>
+          <h2>High-impact digital products for professionals who want clarity, structure, and results.</h2>
           <p>
-            Royalty Plaza Holdings curates books, templates, calculators, playbooks, and toolkits you can deploy immediately.
-            We are populating this marketplace as we finalize each product—this page is already structured for fast updates.
+            Royalty Plaza Holdings curates books, templates, calculators, and playbooks designed to help you
+            earn smarter, spend deliberately, and build wealth with confidence. Every product is built for
+            immediate use—simple, practical, and focused on outcomes.
           </p>
 
           <div class="ctaRow">
@@ -556,7 +566,7 @@
           <span class="goldline" aria-hidden="true"></span>
 
           <p class="small">
-            Note: Checkout here is a placeholder flow (local demo). When you are ready, we will connect payment (Stripe/Paystack) and secure digital delivery.
+            Note: Books open on Amazon (KDP-safe). Templates, tools, and bundles will be purchasable here once payments are connected.
           </p>
         </div>
 
@@ -568,7 +578,7 @@
             </div>
             <div class="kpi">
               <div class="v">Instant</div>
-              <div class="l">Delivery format</div>
+              <div class="l">Digital delivery</div>
             </div>
           </div>
           <div class="kpiRow">
@@ -583,16 +593,48 @@
           </div>
 
           <div class="note">
-            Tip: Update product data in one place (the <span style="color:rgba(242,209,132,.92); font-weight:800">PRODUCTS</span> array in <span style="color:rgba(242,209,132,.92); font-weight:800">app.js</span>). Everything else updates automatically.
+            Tip: Update products in one place (the <span style="color:rgba(242,209,132,.92); font-weight:800">PRODUCTS</span> array in <span style="color:rgba(242,209,132,.92); font-weight:800">app.js</span>). Everything else updates automatically.
           </div>
         </aside>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="hero" id="how-it-works" aria-label="How it works" style="margin-top:14px">
+      <div class="hero-inner" style="grid-template-columns: 1fr; padding:18px">
+        <div>
+          <h2 style="font-size:18px; margin-bottom:8px">How it works</h2>
+          <p style="margin-bottom:14px">
+            Choose what you need, add to cart, and checkout. Books open on Amazon (KDP-safe).
+            Templates, tools, and bundles are delivered digitally.
+          </p>
+
+          <div class="howGrid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px">
+            <div class="kpi">
+              <div class="v">1</div>
+              <div class="l">Browse products by category and search by keywords.</div>
+            </div>
+            <div class="kpi">
+              <div class="v">2</div>
+              <div class="l">Add templates, tools, or bundles to cart. Books open Amazon.</div>
+            </div>
+            <div class="kpi">
+              <div class="v">3</div>
+              <div class="l">Checkout securely and download instantly (digital delivery).</div>
+            </div>
+          </div>
+
+          <div class="muted" style="margin-top:12px">
+            Payments and automated delivery will be connected next (Stripe/Paystack + secure downloads).
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="toolbar" aria-label="Search and filters">
       <div class="field" title="Search by name, tag, or category">
         <span class="mini">Search</span>
-        <input id="q" type="search" placeholder="Try: tax, retirement, templates, health, strategy..." autocomplete="off" />
+        <input id="q" type="search" placeholder="Try: tax, budget, career, templates, tools..." autocomplete="off" />
       </div>
 
       <div class="field" title="Category filter">
@@ -621,24 +663,83 @@
     <div class="section" aria-label="Results header">
       <div>
         <h3 id="resultsTitle">Featured Products</h3>
-        <div class="meta" id="resultsMeta">Showing curated placeholders. Replace with your real products as you finalize them.</div>
+        <div class="meta" id="resultsMeta">Books open on Amazon (KDP-safe). Templates, tools, and bundles will be purchasable here once payments are connected.</div>
       </div>
       <div class="meta" id="resultsCount"></div>
     </div>
 
     <section class="grid" id="grid" aria-label="Product grid"></section>
 
+    <!-- WHO THIS IS FOR -->
+    <section class="hero" aria-label="Who this is for" style="margin-top:14px">
+      <div class="hero-inner" style="grid-template-columns: 1fr; padding:18px">
+        <div>
+          <h2 style="font-size:18px; margin-bottom:8px">Who this marketplace is for</h2>
+          <p style="margin-bottom:14px">
+            Built for professionals aged 20–40 who want structure without complexity:
+            clear systems for money decisions, practical templates, and tools that prevent expensive mistakes.
+          </p>
+
+          <div class="whoGrid" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:10px">
+            <div class="kpi">
+              <div class="v">Early career</div>
+              <div class="l">Start strong: budgeting, saving, and smarter first-decade decisions.</div>
+            </div>
+            <div class="kpi">
+              <div class="v">Mid-career</div>
+              <div class="l">Protect and scale: income control, tax awareness, and wealth defense.</div>
+            </div>
+            <div class="kpi">
+              <div class="v">Founders</div>
+              <div class="l">Run clean operations: business planning, templates, and financial visibility.</div>
+            </div>
+            <div class="kpi">
+              <div class="v">Busy professionals</div>
+              <div class="l">Fast execution: ready-to-use tools that save time and reduce risk.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMING NEXT -->
+    <section class="hero" aria-label="Coming next" style="margin-top:14px">
+      <div class="hero-inner" style="grid-template-columns: 1fr; padding:18px">
+        <div>
+          <h2 style="font-size:18px; margin-bottom:8px">Coming next</h2>
+          <p style="margin-bottom:14px">
+            We are expanding this marketplace with more high-utility products and a complete checkout + delivery system.
+          </p>
+
+          <div class="nextGrid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px">
+            <div class="kpi">
+              <div class="v">Payments</div>
+              <div class="l">Stripe/Paystack checkout with receipts and customer email capture.</div>
+            </div>
+            <div class="kpi">
+              <div class="v">Delivery</div>
+              <div class="l">Secure digital downloads + updated versions for buyers.</div>
+            </div>
+            <div class="kpi">
+              <div class="v">Product drops</div>
+              <div class="l">More templates, tools, and bundles based on demand signals.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer>
       <div class="footgrid">
         <div>
           <strong style="color:rgba(242,209,132,.95)">Royalty Plaza Holdings</strong><br/>
-          Digital & intellectual products marketplace. Books, templates, tools, calculators, and playbooks designed for immediate application.
+          Digital & intellectual products marketplace. Books open on Amazon (KDP-safe). Templates, tools, and bundles are delivered digitally.
           <div class="hr"></div>
           <div>
             <span style="font-family:var(--mono)">Address (brand record):</span>
             8708 Yosemite Trail, Aubrey, TX 76227
           </div>
-          <div class="muted">This site is a static front-end. Hosting: GitHub Pages. Payments and delivery can be connected next.</div>
+          <div class="muted">This is a static front-end on GitHub Pages. Payments and delivery will be connected next.</div>
         </div>
 
         <div class="newsletter">
@@ -723,7 +824,7 @@
       </div>
 
       <div class="modalFoot">
-        <div class="muted" id="cartFootNote">Tip: Add products now; later we connect real payments and secure downloads.</div>
+        <div class="muted" id="cartFootNote">Tip: Add templates, tools, or bundles now; later we connect payments and secure downloads.</div>
         <button class="btn sm primary" id="btnExportCart" title="Export cart JSON">Export cart</button>
       </div>
     </div>
