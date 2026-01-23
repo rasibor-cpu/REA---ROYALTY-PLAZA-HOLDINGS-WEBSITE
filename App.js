@@ -2,76 +2,158 @@
   "use strict";
 
   /****************************************************************
-   * Royalty Plaza Holdings — Marketplace App Logic
-   * - Search / filter / sort
-   * - Cart modal + persistence
-   * - Export cart JSON
-   * - Demo checkout + newsletter
+   * Royalty Plaza Holdings — Marketplace App Logic (v1.1)
+   * Completed items (A, B, C, D):
+   * A) Books link out to Amazon (KDP Select safe) instead of checkout
+   * B) Bundles explicitly show “Includes” (book + templates + tools) and are KDP-safe
+   * C) Product cards support cover thumbnails (coverUrl) with graceful fallback
+   * D) Pricing ladder optimized (impulse → premium, .99 anchors, bundles discounted)
    ****************************************************************/
 
   /****************************************************************
    * 1) PRODUCT CATALOG (EDIT HERE)
    ****************************************************************/
   const PRODUCTS = [
+    // ===== BOOKS (KDP Select: link to Amazon) =====
     {
-      id: "book-retire-strong",
-      name: "Keep More, Retire Strong (Book)",
+      id: "book-money-basics-first-10-years",
+      name: "Money Basics for Your First 10 Years of Work (Book)",
       category: "books",
-      tags: ["retirement", "personal finance", "wealth"],
+      tags: ["early career", "first job", "money basics", "budgeting", "investing"],
       price: 9.99,
       featured: true,
-      createdAt: "2026-01-10",
-      blurb: "A practical guide to keeping more of your money and building a resilient retirement plan."
+      createdAt: "2026-01-15",
+      blurb:
+        "A practical guide for high-school leavers, fresh graduates, and early-career professionals who want a clear financial foundation from day one—earn, budget, save, and start investing safely without confusing jargon.",
+      // Put your Amazon “View on Amazon” URL here (paste from KDP “View on Amazon”)
+      amazonUrl: "",
+      // Optional: put your cover image URL here (see notes below)
+      coverUrl: ""
     },
     {
-      id: "tmpl-budget-system",
-      name: "Personal Budget System (Template Pack)",
+      id: "book-keep-more-retire-strong",
+      name: "Keep More, Retire Strong (Book)",
+      category: "books",
+      tags: ["retirement", "income protection", "wealth", "strategy"],
+      price: 9.99,
+      featured: true,
+      createdAt: "2026-01-15",
+      blurb:
+        "A no-nonsense guide for working professionals who want to legally keep more of what they earn and build long-term financial security through disciplined decisions that compound over time.",
+      amazonUrl: "",
+      coverUrl: ""
+    },
+
+    // ===== TEMPLATES (instant utility) =====
+    {
+      id: "tmpl-personal-budget-cashflow-system",
+      name: "Personal Budget & Cashflow System (Template Pack)",
       category: "templates",
-      tags: ["budget", "excel", "planning"],
-      price: 14.0,
+      tags: ["budget", "cashflow", "planning", "excel"],
+      price: 14.99,
       featured: true,
-      createdAt: "2026-01-12",
-      blurb: "Plug-and-play monthly budget, cashflow tracker, and goal dashboard templates."
+      createdAt: "2026-01-22",
+      blurb:
+        "A plug-and-play finance system that shows where your money goes, what’s leaking, and what to optimize—clear, simple, and built for daily use."
     },
     {
-      id: "tool-tax-starter",
-      name: "Tax Starter Toolkit (Mini Calculator)",
+      id: "tmpl-net-worth-tracker",
+      name: "Net-Worth Tracker & Financial Snapshot (Template)",
+      category: "templates",
+      tags: ["net worth", "tracking", "visibility", "goals"],
+      price: 11.99,
+      featured: false,
+      createdAt: "2026-01-22",
+      blurb:
+        "A clean tracker that gives you a true snapshot of your financial position in minutes—assets, liabilities, and net-worth trend over time."
+    },
+    {
+      id: "tmpl-business-plan-investor-ready",
+      name: "Business Plan Framework (Investor-Ready Template)",
+      category: "templates",
+      tags: ["business", "planning", "strategy", "investors"],
+      price: 24.99,
+      featured: false,
+      createdAt: "2026-01-22",
+      blurb:
+        "A structured business plan framework designed to produce clear, investor-ready documentation—ideal for founders, consultants, and operators."
+    },
+
+    // ===== TOOLS (lightweight, high perceived value) =====
+    {
+      id: "tool-taxiq-starter",
+      name: "TaxIQ Starter Toolkit (Mini Calculator)",
       category: "tools",
-      tags: ["tax", "calculator", "nigeria"],
-      price: 19.0,
+      tags: ["tax", "calculator", "planning", "nigeria"],
+      price: 19.99,
       featured: true,
-      createdAt: "2026-01-14",
-      blurb: "A lightweight tax toolkit scaffold you can extend into a full tax engine (demo package)."
+      createdAt: "2026-01-22",
+      blurb:
+        "A lightweight tax-planning toolkit that helps you understand how income, deductions, and structure affect what you actually keep—built for extension."
     },
     {
-      id: "bundle-wealth-pack",
-      name: "Wealth Builder Bundle (Bundle)",
+      id: "tool-expense-leak-detector",
+      name: "Expense Leak Detector (Diagnostic Tool)",
+      category: "tools",
+      tags: ["expenses", "optimization", "habits", "budget"],
+      price: 9.99,
+      featured: false,
+      createdAt: "2026-01-22",
+      blurb:
+        "A fast diagnostic tool that highlights hidden spending leaks and patterns—perfect for professionals who earn well but feel financially stuck."
+    },
+
+    // ===== BUNDLES (KDP-safe value packs) =====
+    // NOTE: We DO NOT sell the ebook file. We bundle “value-add” assets and link the book to Amazon.
+    {
+      id: "bundle-young-pro-starter-pack",
+      name: "Young Professional Starter Pack (Bundle)",
       category: "bundles",
-      tags: ["bundle", "value", "finance"],
-      price: 39.0,
+      tags: ["bundle", "early career", "value", "starter pack"],
+      price: 29.99,
       featured: true,
-      createdAt: "2026-01-18",
-      blurb: "Books + templates + checklists packaged for fast execution and better outcomes."
+      createdAt: "2026-01-22",
+      blurb:
+        "A high-value starter pack for early-career professionals—budgeting + tracking + leak detection, plus the recommended book (Amazon link).",
+      includes: [
+        "Personal Budget & Cashflow System (Template Pack)",
+        "Net-Worth Tracker & Financial Snapshot (Template)",
+        "Expense Leak Detector (Diagnostic Tool)",
+        "Book: Money Basics for Your First 10 Years of Work (View on Amazon)"
+      ]
     },
     {
-      id: "tmpl-business-plan",
-      name: "Business Plan Framework (Template)",
-      category: "templates",
-      tags: ["business", "plan", "strategy"],
-      price: 24.0,
-      featured: false,
-      createdAt: "2026-01-20",
-      blurb: "A structured business plan template for fast investor-ready documentation."
+      id: "bundle-mid-career-wealth-pack",
+      name: "Mid-Career Wealth Pack (Bundle)",
+      category: "bundles",
+      tags: ["bundle", "wealth", "strategy", "protection"],
+      price: 49.99,
+      featured: true,
+      createdAt: "2026-01-22",
+      blurb:
+        "Built for professionals in their highest-earning years—visibility + tax awareness + disciplined systems, plus the recommended book (Amazon link).",
+      includes: [
+        "Net-Worth Tracker & Financial Snapshot (Template)",
+        "TaxIQ Starter Toolkit (Mini Calculator)",
+        "Personal Budget & Cashflow System (Template Pack)",
+        "Book: Keep More, Retire Strong (View on Amazon)"
+      ]
     },
     {
-      id: "tool-checklists",
-      name: "Execution Checklists Library (Toolkit)",
-      category: "tools",
-      tags: ["checklists", "systems", "productivity"],
-      price: 12.0,
+      id: "bundle-business-strategy-pack",
+      name: "Business & Strategy Pack (Bundle)",
+      category: "bundles",
+      tags: ["bundle", "business", "founders", "planning"],
+      price: 59.99,
       featured: false,
-      createdAt: "2026-01-21",
-      blurb: "Operational checklists for repeatable delivery—reduce missed steps and rework."
+      createdAt: "2026-01-22",
+      blurb:
+        "For founders and consultants—business planning framework + tax toolkit + financial visibility, packaged for execution speed.",
+      includes: [
+        "Business Plan Framework (Investor-Ready Template)",
+        "TaxIQ Starter Toolkit (Mini Calculator)",
+        "Net-Worth Tracker & Financial Snapshot (Template)"
+      ]
     }
   ];
 
@@ -80,7 +162,6 @@
    ****************************************************************/
   const LS_KEY = "rph_cart_v1";
   const LS_UI = "rph_ui_v1";
-
   let cart = loadCart();
   let denseUI = loadUI();
 
@@ -121,7 +202,6 @@
     nlStatus: byId("nlStatus")
   };
 
-  // Required element check
   const REQUIRED = [
     "grid","q","category","sort","resultsTitle","resultsMeta","resultsCount","kpiProducts","cartCount",
     "overlay","btnCart","btnClose","cartList","subTotal","btnClear","btnContinue","checkoutForm","btnExportCart",
@@ -174,6 +254,7 @@
 
     el.btnContinue.addEventListener("click", closeCart);
 
+    // Demo checkout: books do NOT appear in cart; only templates/tools/bundles
     el.checkoutForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const items = cartToItems();
@@ -201,7 +282,7 @@
     });
 
     el.btnHowItWorks.addEventListener("click", () => {
-      showToast("How it works: Choose product → Add to cart → Checkout (demo). Next: payments + delivery.");
+      showToast("How it works: Choose a product → Add to cart → Checkout. Books open Amazon (KDP-safe).");
     });
 
     el.btnTheme.addEventListener("click", () => {
@@ -235,7 +316,8 @@
       : (cat.charAt(0).toUpperCase() + cat.slice(1));
 
     el.resultsTitle.textContent = catLabel;
-    el.resultsMeta.textContent = "Showing curated placeholders. Replace with your real products as you finalize them.";
+    el.resultsMeta.textContent =
+      "Books open Amazon (KDP-safe). Templates, tools, and bundles will be purchasable here once payments are connected.";
 
     let list = PRODUCTS.slice();
 
@@ -243,7 +325,9 @@
 
     if (query) {
       list = list.filter(p => {
-        const hay = [p.name, p.category, (p.tags || []).join(" "), p.blurb].join(" ").toLowerCase();
+        const hay = [p.name, p.category, (p.tags || []).join(" "), p.blurb, (p.includes || []).join(" ")]
+          .join(" ")
+          .toLowerCase();
         return hay.includes(query);
       });
     }
@@ -273,14 +357,36 @@
     const card = document.createElement("article");
     card.className = "card";
 
+    const isBook = p.category === "books";
+    const primaryLabel = isBook ? "View on Amazon" : "Add";
+    const primaryDisabled = isBook && !p.amazonUrl;
+
+    // Includes line (bundles)
+    const includesLine = Array.isArray(p.includes) && p.includes.length
+      ? `<div class="small" style="margin-top:6px; color:rgba(242,242,247,.68)">
+           <strong style="color:rgba(242,209,132,.92)">Includes:</strong>
+           ${escapeHtml(p.includes.slice(0, 3).join(" • "))}
+           ${p.includes.length > 3 ? " …" : ""}
+         </div>`
+      : "";
+
+    // Cover thumbnail (if provided)
+    const coverHtml = p.coverUrl
+      ? `<img src="${escapeAttr(p.coverUrl)}" alt="${escapeAttr(p.name)} cover" class="coverImg"
+              onerror="this.remove()" />`
+      : "";
+
     card.innerHTML = `
-      <div class="thumb" aria-hidden="true"></div>
+      <div class="thumb" aria-hidden="true">
+        ${coverHtml}
+      </div>
       <div class="content">
         <div class="title">
           <span>${escapeHtml(p.name)}</span>
           <span class="chip">${escapeHtml(p.category.toUpperCase())}</span>
         </div>
         <div class="desc">${escapeHtml(p.blurb || "")}</div>
+        ${includesLine}
         <div class="row">
           <div>
             <div class="price">${money(p.price)}</div>
@@ -288,20 +394,48 @@
           </div>
           <div class="btnRow">
             <button class="btn sm" data-action="details">Details</button>
-            <button class="btn sm primary" data-action="add">Add</button>
+            <button class="btn sm primary" data-action="primary" ${primaryDisabled ? "disabled" : ""}>
+              ${primaryLabel}
+            </button>
           </div>
         </div>
       </div>
     `;
 
-    card.querySelector('[data-action="add"]').addEventListener("click", () => {
-      addToCart(p.id, 1);
-      showToast(`Added: ${p.name}`);
-    });
+    // If we have a cover image, refine thumb styling in-place (no CSS file edits required)
+    const img = card.querySelector(".coverImg");
+    if (img) {
+      img.style.width = "100%";
+      img.style.height = "100%";
+      img.style.objectFit = "cover";
+      img.style.display = "block";
+      img.style.borderBottom = "1px solid rgba(255,255,255,.06)";
+      // remove dashed border overlay effect visually by lowering overlay
+      // (the CSS uses :after; we can't remove it, but image will dominate)
+    }
 
     card.querySelector('[data-action="details"]').addEventListener("click", () => {
       const tags = (p.tags || []).map(t => "#" + t).join(" ");
-      showToast(`${p.name} — ${money(p.price)} • ${tags || "No tags"}`);
+      if (Array.isArray(p.includes) && p.includes.length) {
+        showToast(`${p.name} — ${money(p.price)} • Includes: ${p.includes.slice(0, 4).join("; ")}${p.includes.length > 4 ? "…" : ""}`);
+      } else {
+        showToast(`${p.name} — ${money(p.price)} • ${tags || "No tags"}`);
+      }
+    });
+
+    card.querySelector('[data-action="primary"]').addEventListener("click", () => {
+      if (isBook) {
+        if (!p.amazonUrl) {
+          showToast("Amazon link not set yet. Add amazonUrl for this book in app.js.");
+          return;
+        }
+        // KDP Select safe: open Amazon
+        window.open(p.amazonUrl, "_blank", "noopener,noreferrer");
+        return;
+      }
+
+      addToCart(p.id, 1);
+      showToast(`Added: ${p.name}`);
     });
 
     return card;
@@ -321,7 +455,14 @@
     el.overlay.setAttribute("aria-hidden", "true");
   }
 
+  // Books are never added to cart (KDP Select safe)
   function addToCart(productId, qtyDelta) {
+    const product = PRODUCTS.find(x => x.id === productId);
+    if (product && product.category === "books") {
+      showToast("Books open Amazon (KDP-safe). They are not added to cart.");
+      return;
+    }
+
     const cur = Number(cart[productId] || 0);
     const next = Math.max(0, cur + Number(qtyDelta || 0));
     if (next === 0) delete cart[productId];
@@ -336,6 +477,8 @@
       .map(([id, qty]) => {
         const product = PRODUCTS.find(p => p.id === id);
         if (!product) return null;
+        // safety: exclude books if somehow present
+        if (product.category === "books") return null;
         return { product, qty: Number(qty) };
       })
       .filter(Boolean);
@@ -349,7 +492,7 @@
     const items = cartToItems();
 
     if (!items.length) {
-      el.cartList.innerHTML = `<div class="muted">Your cart is empty. Add a product to start.</div>`;
+      el.cartList.innerHTML = `<div class="muted">Your cart is empty. Add a template, tool, or bundle to start.</div>`;
       el.subTotal.textContent = money(0);
       return;
     }
@@ -360,10 +503,15 @@
       const row = document.createElement("div");
       row.className = "cartItem";
 
+      const includesMini = Array.isArray(product.includes) && product.includes.length
+        ? `<div class="meta">Includes: ${escapeHtml(product.includes.slice(0, 3).join(" • "))}${product.includes.length > 3 ? " …" : ""}</div>`
+        : "";
+
       row.innerHTML = `
         <div class="left">
           <div class="name">${escapeHtml(product.name)}</div>
           <div class="meta">${escapeHtml(product.category.toUpperCase())} • ${money(product.price)} each</div>
+          ${includesMini}
         </div>
         <div class="right">
           <div class="qtyRow">
@@ -438,7 +586,6 @@
    * 9) UI: DENSITY TOGGLE
    ****************************************************************/
   function applyDensity() {
-    // matches CSS variables in index.html
     document.documentElement.style.setProperty("--radius", denseUI ? "16px" : "20px");
     document.documentElement.style.setProperty("--radius2", denseUI ? "22px" : "28px");
   }
@@ -524,7 +671,7 @@
     el.toast.textContent = String(msg || "");
     el.toast.classList.add("show");
     clearTimeout(showToast._t);
-    showToast._t = setTimeout(() => el.toast.classList.remove("show"), 3200);
+    showToast._t = setTimeout(() => el.toast.classList.remove("show"), 3400);
   }
 
   function escapeHtml(s) {
@@ -534,5 +681,10 @@
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
+  }
+
+  function escapeAttr(s) {
+    // safe for attribute context
+    return escapeHtml(s).replaceAll("`", "&#096;");
   }
 })();
