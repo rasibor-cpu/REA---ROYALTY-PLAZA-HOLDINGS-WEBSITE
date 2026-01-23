@@ -1,1 +1,1202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0b10" />
+  <meta name="description" content="Royalty Plaza Holdings — Marketplace for digital & intellectual products: books, templates, tools, guides, and more." />
+  <title>Royalty Plaza Holdings — Digital Products Marketplace</title>
+
+  <style>
+    :root{
+      --bg0:#07070b;
+      --bg1:#0b0b10;
+      --card:#0f1018;
+      --card2:#121328;
+      --line:rgba(255,255,255,.08);
+      --text:#f2f2f7;
+      --muted:rgba(242,242,247,.72);
+      --gold:#d7b35c;
+      --gold2:#f2d184;
+      --ok:#4ade80;
+      --danger:#ff6b6b;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 20px;
+      --radius2: 28px;
+      --max: 1200px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 10% 0%, rgba(215,179,92,.22), rgba(215,179,92,0) 55%),
+        radial-gradient(800px 500px at 95% 10%, rgba(242,209,132,.12), rgba(242,209,132,0) 60%),
+        radial-gradient(900px 600px at 60% 110%, rgba(215,179,92,.10), rgba(215,179,92,0) 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    button, input, select, textarea{font-family:inherit}
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:18px 18px 72px}
+
+    /* Header */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(12px);
+      background: rgba(11,11,16,.74);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      max-width:var(--max); margin:0 auto;
+      padding:14px 18px;
+      display:flex; align-items:center; gap:12px; justify-content:space-between;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width:210px;
+    }
+    .logo{
+      width:42px; height:42px; border-radius:14px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(242,209,132,.95), rgba(242,209,132,0)),
+        radial-gradient(18px 18px at 70% 70%, rgba(215,179,92,.55), rgba(215,179,92,0)),
+        linear-gradient(135deg, rgba(215,179,92,.28), rgba(255,255,255,.05));
+      border:1px solid rgba(215,179,92,.28);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      position:relative;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:8px;
+      border-radius:12px;
+      border:1px solid rgba(215,179,92,.25);
+      transform: rotate(8deg);
+      opacity:.85;
+    }
+    .brand h1{margin:0; font-size:14px; letter-spacing:.4px}
+    .brand .sub{margin:0; font-size:12px; color:var(--muted)}
+
+    .nav{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-size:13px;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      user-select:none;
+    }
+    .pill:hover{transform: translateY(-1px); border-color: rgba(215,179,92,.35); background: rgba(215,179,92,.06)}
+    .pill.active{border-color: rgba(215,179,92,.55); background: rgba(215,179,92,.10)}
+    .pill .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: rgba(215,179,92,.75);
+      box-shadow: 0 0 0 3px rgba(215,179,92,.15);
+    }
+
+    .actions{display:flex; align-items:center; gap:10px}
+    .iconbtn{
+      width:42px; height:42px; border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      cursor:pointer;
+      display:grid; place-items:center;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      position:relative;
+    }
+    .iconbtn:hover{transform: translateY(-1px); border-color: rgba(215,179,92,.35); background: rgba(215,179,92,.06)}
+    .badge{
+      position:absolute; top:-6px; right:-6px;
+      background: rgba(215,179,92,.95);
+      color:#0b0b10;
+      border-radius:999px;
+      padding:2px 7px;
+      font-size:12px; font-weight:700;
+      border:1px solid rgba(0,0,0,.25);
+      box-shadow: 0 10px 20px rgba(0,0,0,.35);
+      min-width:22px; text-align:center;
+    }
+
+    /* Hero */
+    .hero{
+      margin-top:18px;
+      border:1px solid rgba(215,179,92,.18);
+      border-radius: var(--radius2);
+      background:
+        radial-gradient(900px 600px at 10% 0%, rgba(215,179,92,.18), rgba(215,179,92,0) 55%),
+        radial-gradient(700px 500px at 95% 20%, rgba(242,209,132,.10), rgba(242,209,132,0) 55%),
+        linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero-inner{
+      padding:22px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .hero h2{
+      margin:0 0 10px;
+      font-size:26px;
+      letter-spacing:.2px;
+      line-height:1.12;
+    }
+    .hero p{
+      margin:0 0 16px;
+      color:var(--muted);
+      max-width: 60ch;
+      line-height:1.55;
+      font-size:14px;
+    }
+    .hero .ctaRow{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .btn{
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:650;
+      letter-spacing:.2px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(215,179,92,.35); background: rgba(215,179,92,.08)}
+    .btn.primary{
+      border-color: rgba(215,179,92,.55);
+      background: linear-gradient(135deg, rgba(215,179,92,.25), rgba(255,255,255,.04));
+    }
+    .btn.ghost{
+      background: transparent;
+    }
+
+    .heroCard{
+      border:1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(15,16,24,.75);
+      padding:16px;
+      display:flex; flex-direction:column; gap:10px;
+      min-height: 168px;
+    }
+    .heroCard .kpiRow{
+      display:grid; grid-template-columns:1fr 1fr; gap:10px;
+    }
+    .kpi{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background: rgba(255,255,255,.03);
+      padding:12px;
+    }
+    .kpi .v{font-size:18px; font-weight:800; letter-spacing:.2px}
+    .kpi .l{font-size:12px; color:var(--muted); margin-top:2px}
+    .heroCard .note{
+      margin-top:auto;
+      font-size:12px; color:var(--muted); line-height:1.4;
+    }
+    .goldline{
+      display:inline-block;
+      height:1px; width:100%;
+      background: linear-gradient(90deg, rgba(215,179,92,0), rgba(215,179,92,.75), rgba(215,179,92,0));
+      margin: 8px 0;
+      opacity:.8;
+    }
+
+    /* Toolbar */
+    .toolbar{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1fr 220px 220px;
+      gap:10px;
+      align-items:center;
+    }
+    .field{
+      border:1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      padding:10px 12px;
+      display:flex; gap:10px; align-items:center;
+    }
+    .field input, .field select{
+      width:100%;
+      border:none; outline:none;
+      background: transparent;
+      color: var(--text);
+      font-size:14px;
+    }
+    .field input::placeholder{color: rgba(242,242,247,.45)}
+    .field select{appearance:none}
+    .field .hint{font-size:12px; color:var(--muted)}
+    .field .mini{
+      font-family:var(--mono);
+      font-size:12px;
+      color: rgba(242,242,247,.65);
+    }
+
+    /* Sections */
+    .section{
+      margin-top:18px;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:10px;
+    }
+    .section h3{margin:0; font-size:16px}
+    .section .meta{color:var(--muted); font-size:12px}
+
+    /* Grid */
+    .grid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .card{
+      grid-column: span 4;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(15,16,24,.78);
+      box-shadow: 0 16px 45px rgba(0,0,0,.40);
+      overflow:hidden;
+      position:relative;
+      display:flex; flex-direction:column;
+      min-height: 210px;
+    }
+    .thumb{
+      height:106px;
+      background:
+        radial-gradient(120px 80px at 20% 30%, rgba(242,209,132,.35), rgba(242,209,132,0)),
+        radial-gradient(140px 90px at 70% 60%, rgba(215,179,92,.28), rgba(215,179,92,0)),
+        linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-bottom:1px solid rgba(255,255,255,.06);
+      position:relative;
+    }
+    .thumb:after{
+      content:"";
+      position:absolute; inset:12px;
+      border-radius: 16px;
+      border:1px dashed rgba(215,179,92,.30);
+      opacity:.8;
+    }
+    .content{padding:14px; display:flex; flex-direction:column; gap:8px; flex:1}
+    .title{
+      font-size:14px; font-weight:800; letter-spacing:.2px; line-height:1.2;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .chip{
+      padding:6px 10px;
+      font-size:12px;
+      border-radius:999px;
+      border:1px solid rgba(215,179,92,.28);
+      background: rgba(215,179,92,.10);
+      color: rgba(242,209,132,.95);
+      white-space:nowrap;
+    }
+    .desc{font-size:12px; color:var(--muted); line-height:1.45; min-height: 36px}
+    .row{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:auto}
+    .price{
+      font-size:14px; font-weight:900; letter-spacing:.2px;
+      color: rgba(242,209,132,.95);
+    }
+    .small{font-size:12px; color:var(--muted)}
+    .btnRow{display:flex; gap:8px}
+    .btn.sm{padding:10px 10px; border-radius:14px; font-size:13px}
+    .btn.sm.primary{font-weight:800}
+
+    /* Footer */
+    footer{
+      margin-top:22px;
+      border-top:1px solid var(--line);
+      padding-top:18px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+    .footgrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+    }
+    .newsletter{
+      border:1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255,255,255,.03);
+      padding:14px;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .newsletter .line{font-size:12px; color:var(--muted)}
+    .newsletter .subrow{display:flex; gap:10px; flex-wrap:wrap}
+    .newsletter input{
+      flex:1; min-width: 220px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: 16px;
+      padding:12px 12px;
+      color:var(--text);
+      outline:none;
+    }
+
+    /* Modal */
+    .overlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.60);
+      backdrop-filter: blur(8px);
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      z-index:100;
+      padding:18px;
+    }
+    .overlay.open{display:flex}
+    .modal{
+      width:min(920px, 100%);
+      border:1px solid rgba(215,179,92,.20);
+      border-radius: 26px;
+      background: rgba(12,12,18,.92);
+      box-shadow: 0 22px 80px rgba(0,0,0,.65);
+      overflow:hidden;
+      max-height: 86vh;
+      display:flex; flex-direction:column;
+    }
+    .modalHead{
+      padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      border-bottom:1px solid var(--line);
+    }
+    .modalHead .mh{
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .modalHead .mh .t{font-weight:900; letter-spacing:.2px}
+    .modalHead .mh .s{font-size:12px; color:var(--muted)}
+    .modalBody{
+      padding:14px 16px;
+      overflow:auto;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:12px;
+    }
+    .panel{
+      border:1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255,255,255,.03);
+      padding:14px;
+    }
+    .panel h4{margin:0 0 10px; font-size:13px; letter-spacing:.2px}
+    .cartList{display:flex; flex-direction:column; gap:10px}
+    .cartItem{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius: 18px;
+      padding:12px;
+      background: rgba(255,255,255,.02);
+    }
+    .cartItem .left{display:flex; flex-direction:column; gap:4px}
+    .cartItem .name{font-weight:850; font-size:13px}
+    .cartItem .meta{font-size:12px; color:var(--muted)}
+    .cartItem .right{display:flex; flex-direction:column; align-items:flex-end; gap:8px}
+    .qtyRow{display:flex; align-items:center; gap:8px}
+    .qtyBtn{
+      width:34px; height:34px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      cursor:pointer;
+    }
+    .qtyVal{
+      width:44px; text-align:center;
+      font-family:var(--mono);
+      color: rgba(242,242,247,.85);
+    }
+    .dangerLink{
+      color: rgba(255,107,107,.95);
+      font-size:12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .totals{
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .totals .line{
+      display:flex; justify-content:space-between; gap:10px;
+      font-size:13px;
+    }
+    .totals .line strong{color: rgba(242,209,132,.95)}
+    .hr{
+      height:1px; background: rgba(255,255,255,.07);
+      margin:10px 0;
+    }
+
+    .checkoutForm{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .checkoutForm label{font-size:12px; color:var(--muted)}
+    .checkoutForm input, .checkoutForm select{
+      width:100%;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: 16px;
+      padding:12px 12px;
+      color:var(--text);
+      outline:none;
+    }
+    .modalFoot{
+      padding:14px 16px;
+      border-top:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      flex-wrap:wrap;
+    }
+    .muted{color:var(--muted); font-size:12px}
+
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:16px;
+      transform: translateX(-50%);
+      padding:12px 14px;
+      border-radius: 16px;
+      border:1px solid rgba(215,179,92,.25);
+      background: rgba(12,12,18,.92);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      color: rgba(242,242,247,.92);
+      font-size:13px;
+      display:none;
+      z-index:200;
+      max-width:min(720px, calc(100% - 24px));
+    }
+    .toast.show{display:block}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-inner{grid-template-columns: 1fr; }
+      .toolbar{grid-template-columns: 1fr 1fr; }
+      .toolbar .field:nth-child(1){grid-column: 1 / -1;}
+      .card{grid-column: span 6;}
+      .modalBody{grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px){
+      .brand{min-width:auto}
+      .nav{display:none}
+      .card{grid-column: span 12;}
+      .footgrid{grid-template-columns: 1fr;}
+    }
+
+    /* Accessibility */
+    .sr{
+      position:absolute; width:1px; height:1px;
+      padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0);
+      border:0;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand" role="banner">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Royalty Plaza Holdings</h1>
+          <p class="sub">Marketplace for digital & intellectual products</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary">
+        <div class="pill active" data-filter="all"><span class="dot"></span>All</div>
+        <div class="pill" data-filter="books"><span class="dot"></span>Books</div>
+        <div class="pill" data-filter="templates"><span class="dot"></span>Templates</div>
+        <div class="pill" data-filter="tools"><span class="dot"></span>Tools</div>
+        <div class="pill" data-filter="bundles"><span class="dot"></span>Bundles</div>
+      </nav>
+
+      <div class="actions" aria-label="Actions">
+        <button class="iconbtn" id="btnTheme" title="Toggle density">
+          <span aria-hidden="true">⧉</span>
+          <span class="sr">Toggle density</span>
+        </button>
+
+        <button class="iconbtn" id="btnCart" title="Open cart">
+          <span aria-hidden="true">🛒</span>
+          <span class="badge" id="cartCount">0</span>
+          <span class="sr">Open cart</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" aria-label="Hero">
+      <div class="hero-inner">
+        <div>
+          <h2>Buy ready-to-use digital products that save time, reduce risk, and improve outcomes.</h2>
+          <p>
+            Royalty Plaza Holdings curates books, templates, calculators, playbooks, and toolkits you can deploy immediately.
+            We are populating this marketplace as we finalize each product—this page is already structured for fast updates.
+          </p>
+
+          <div class="ctaRow">
+            <button class="btn primary" id="btnBrowse">Browse Products</button>
+            <button class="btn ghost" id="btnSeeBundles">See Bundles</button>
+            <button class="btn" id="btnHowItWorks">How it works</button>
+          </div>
+
+          <span class="goldline" aria-hidden="true"></span>
+
+          <p class="small">
+            Note: Checkout here is a placeholder flow (local demo). When you are ready, we will connect payment (Stripe/Paystack) and secure digital delivery.
+          </p>
+        </div>
+
+        <aside class="heroCard" aria-label="Highlights">
+          <div class="kpiRow">
+            <div class="kpi">
+              <div class="v" id="kpiProducts">0</div>
+              <div class="l">Products listed</div>
+            </div>
+            <div class="kpi">
+              <div class="v">Instant</div>
+              <div class="l">Delivery format</div>
+            </div>
+          </div>
+          <div class="kpiRow">
+            <div class="kpi">
+              <div class="v">Black & Gold</div>
+              <div class="l">Mobile-first UI</div>
+            </div>
+            <div class="kpi">
+              <div class="v">Local</div>
+              <div class="l">Cart persistence</div>
+            </div>
+          </div>
+
+          <div class="note">
+            Tip: Update product data in one place (the <span style="color:rgba(242,209,132,.92); font-weight:800">PRODUCTS</span> array in the script). Everything else updates automatically.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="toolbar" aria-label="Search and filters">
+      <div class="field" title="Search by name, tag, or category">
+        <span class="mini">Search</span>
+        <input id="q" type="search" placeholder="Try: tax, retirement, templates, health, strategy..." autocomplete="off" />
+      </div>
+
+      <div class="field" title="Category filter">
+        <span class="mini">Category</span>
+        <select id="category">
+          <option value="all">All</option>
+          <option value="books">Books</option>
+          <option value="templates">Templates</option>
+          <option value="tools">Tools</option>
+          <option value="bundles">Bundles</option>
+        </select>
+      </div>
+
+      <div class="field" title="Sort">
+        <span class="mini">Sort</span>
+        <select id="sort">
+          <option value="featured">Featured</option>
+          <option value="price_asc">Price: Low → High</option>
+          <option value="price_desc">Price: High → Low</option>
+          <option value="newest">Newest</option>
+          <option value="name">Name</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="section" aria-label="Results header">
+      <div>
+        <h3 id="resultsTitle">Featured Products</h3>
+        <div class="meta" id="resultsMeta">Showing curated placeholders. Replace with your real products as you finalize them.</div>
+      </div>
+      <div class="meta" id="resultsCount"></div>
+    </div>
+
+    <section class="grid" id="grid" aria-label="Product grid"></section>
+
+    <footer>
+      <div class="footgrid">
+        <div>
+          <strong style="color:rgba(242,209,132,.95)">Royalty Plaza Holdings</strong><br/>
+          Digital & intellectual products marketplace. Books, templates, tools, calculators, and playbooks designed for immediate application.
+          <div class="hr"></div>
+          <div>
+            <span style="font-family:var(--mono)">Address (brand record):</span>
+            8708 Yosemite Trail, Aubrey, TX 76227
+          </div>
+          <div class="muted">This site is a static front-end. Hosting: GitHub Pages. Payments and delivery can be connected next.</div>
+        </div>
+
+        <div class="newsletter">
+          <div style="font-weight:850; letter-spacing:.2px">Get new releases</div>
+          <div class="line">Join the list for product drops, bundles, and discounts.</div>
+          <div class="subrow">
+            <input id="nlEmail" type="email" placeholder="Email address" />
+            <button class="btn primary" id="btnSubscribe">Subscribe</button>
+          </div>
+          <div class="muted" id="nlStatus">No spam. Unsubscribe anytime.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px" class="muted">
+        © <span id="year"></span> Royalty Plaza Holdings. All rights reserved.
+      </div>
+    </footer>
+  </main>
+
+  <!-- CART MODAL -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Cart and Checkout">
+      <div class="modalHead">
+        <div class="mh">
+          <div class="t">Your Cart</div>
+          <div class="s" id="cartSub">Local demo cart (persists in this browser)</div>
+        </div>
+        <button class="iconbtn" id="btnClose" title="Close">
+          <span aria-hidden="true">✕</span>
+          <span class="sr">Close</span>
+        </button>
+      </div>
+
+      <div class="modalBody">
+        <div class="panel">
+          <h4>Items</h4>
+          <div class="cartList" id="cartList"></div>
+          <div class="hr"></div>
+          <div class="btnRow">
+            <button class="btn sm" id="btnClear">Clear cart</button>
+            <button class="btn sm" id="btnContinue">Continue shopping</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h4>Checkout (placeholder)</h4>
+
+          <div class="totals">
+            <div class="line"><span>Subtotal</span><strong id="subTotal">$0.00</strong></div>
+            <div class="line"><span>Delivery</span><span class="muted">Instant (digital)</span></div>
+            <div class="line"><span>Taxes</span><span class="muted">Calculated later</span></div>
+          </div>
+
+          <div class="hr"></div>
+
+          <form class="checkoutForm" id="checkoutForm">
+            <div>
+              <label for="fullName">Full name</label>
+              <input id="fullName" type="text" placeholder="Name" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div>
+              <label for="country">Country</label>
+              <select id="country" required>
+                <option value="US">United States</option>
+                <option value="NG">Nigeria</option>
+                <option value="CA">Canada</option>
+                <option value="GB">United Kingdom</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+
+            <button class="btn primary" type="submit" id="btnPay">Proceed (demo)</button>
+            <div class="muted">
+              This button simulates checkout. When ready, we will integrate Stripe/Paystack and automatic file delivery.
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modalFoot">
+        <div class="muted" id="cartFootNote">Tip: Add products now; later we connect real payments and secure downloads.</div>
+        <button class="btn sm primary" id="btnExportCart" title="Export cart JSON">Export cart</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /****************************************************************
+     * Royalty Plaza Holdings — Single-file marketplace
+     * How to update products:
+     *   1) Edit the PRODUCTS array below (name, price, category, etc.)
+     *   2) Push to GitHub Pages
+     ****************************************************************/
+
+    // ----- Product seed data (placeholders; replace as you finalize products) -----
+    const PRODUCTS = [
+      {
+        id: "book-retire-strong",
+        name: "Keep More, Retire Strong (Book)",
+        category: "books",
+        tags: ["retirement", "personal finance", "wealth"],
+        price: 9.99,
+        featured: true,
+        createdAt: "2026-01-10",
+        blurb: "A practical guide to keeping more of your money and building a resilient retirement plan."
+      },
+      {
+        id: "tmpl-budget-system",
+        name: "Personal Budget System (Template Pack)",
+        category: "templates",
+        tags: ["budget", "excel", "planning"],
+        price: 14.00,
+        featured: true,
+        createdAt: "2026-01-12",
+        blurb: "Plug-and-play monthly budget, cashflow tracker, and goal dashboard templates."
+      },
+      {
+        id: "tool-tax-starter",
+        name: "Tax Starter Toolkit (Mini Calculator)",
+        category: "tools",
+        tags: ["tax", "calculator", "nigeria"],
+        price: 19.00,
+        featured: true,
+        createdAt: "2026-01-14",
+        blurb: "A lightweight tax toolkit scaffold you can extend into a full tax engine (demo package)."
+      },
+      {
+        id: "bundle-wealth-pack",
+        name: "Wealth Builder Bundle (Bundle)",
+        category: "bundles",
+        tags: ["bundle", "value", "finance"],
+        price: 39.00,
+        featured: true,
+        createdAt: "2026-01-18",
+        blurb: "Books + templates + checklists packaged for fast execution and better outcomes."
+      },
+      {
+        id: "tmpl-business-plan",
+        name: "Business Plan Framework (Template)",
+        category: "templates",
+        tags: ["business", "plan", "strategy"],
+        price: 24.00,
+        featured: false,
+        createdAt: "2026-01-20",
+        blurb: "A structured business plan template for fast investor-ready documentation."
+      },
+      {
+        id: "tool-checklists",
+        name: "Execution Checklists Library (Toolkit)",
+        category: "tools",
+        tags: ["checklists", "systems", "productivity"],
+        price: 12.00,
+        featured: false,
+        createdAt: "2026-01-21",
+        blurb: "Operational checklists for repeatable delivery—reduce missed steps and rework."
+      }
+    ];
+
+    // ----- State -----
+    const LS_KEY = "rph_cart_v1";
+    const LS_UI  = "rph_ui_v1"; // density toggle
+    let cart = loadCart();
+    let denseUI = loadUI();
+
+    // ----- DOM -----
+    const grid = document.getElementById("grid");
+    const q = document.getElementById("q");
+    const category = document.getElementById("category");
+    const sort = document.getElementById("sort");
+    const resultsTitle = document.getElementById("resultsTitle");
+    const resultsMeta = document.getElementById("resultsMeta");
+    const resultsCount = document.getElementById("resultsCount");
+    const kpiProducts = document.getElementById("kpiProducts");
+    const cartCount = document.getElementById("cartCount");
+
+    const overlay = document.getElementById("overlay");
+    const btnCart = document.getElementById("btnCart");
+    const btnClose = document.getElementById("btnClose");
+    const cartList = document.getElementById("cartList");
+    const subTotal = document.getElementById("subTotal");
+    const btnClear = document.getElementById("btnClear");
+    const btnContinue = document.getElementById("btnContinue");
+    const btnPay = document.getElementById("btnPay");
+    const checkoutForm = document.getElementById("checkoutForm");
+    const btnExportCart = document.getElementById("btnExportCart");
+
+    const btnBrowse = document.getElementById("btnBrowse");
+    const btnSeeBundles = document.getElementById("btnSeeBundles");
+    const btnHowItWorks = document.getElementById("btnHowItWorks");
+    const btnTheme = document.getElementById("btnTheme");
+
+    const year = document.getElementById("year");
+    const toast = document.getElementById("toast");
+
+    const btnSubscribe = document.getElementById("btnSubscribe");
+    const nlEmail = document.getElementById("nlEmail");
+    const nlStatus = document.getElementById("nlStatus");
+
+    // Nav pills
+    document.querySelectorAll(".pill[data-filter]").forEach(p => {
+      p.addEventListener("click", () => {
+        document.querySelectorAll(".pill[data-filter]").forEach(x => x.classList.remove("active"));
+        p.classList.add("active");
+        const f = p.getAttribute("data-filter");
+        category.value = f;
+        category.dispatchEvent(new Event("change"));
+      });
+    });
+
+    // ----- Init -----
+    year.textContent = new Date().getFullYear();
+    kpiProducts.textContent = String(PRODUCTS.length);
+    applyDensity();
+    render();
+
+    // ----- Events -----
+    q.addEventListener("input", render);
+    category.addEventListener("change", () => {
+      // sync pills
+      const v = category.value;
+      document.querySelectorAll(".pill[data-filter]").forEach(x => {
+        x.classList.toggle("active", x.getAttribute("data-filter") === v);
+      });
+      render();
+    });
+    sort.addEventListener("change", render);
+
+    btnCart.addEventListener("click", () => openCart());
+    btnClose.addEventListener("click", closeCart);
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) closeCart();
+    });
+
+    btnClear.addEventListener("click", () => {
+      cart = {};
+      saveCart(cart);
+      updateCartBadge();
+      renderCart();
+      showToast("Cart cleared.");
+    });
+
+    btnContinue.addEventListener("click", () => closeCart());
+
+    checkoutForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const items = cartToItems();
+      if (!items.length){
+        showToast("Your cart is empty.");
+        return;
+      }
+      showToast("Demo checkout complete. Next step: connect Stripe/Paystack + digital delivery.");
+      // Demo: clear cart after "purchase"
+      cart = {};
+      saveCart(cart);
+      updateCartBadge();
+      renderCart();
+      closeCart();
+    });
+
+    btnExportCart.addEventListener("click", () => {
+      const payload = {
+        brand: "Royalty Plaza Holdings",
+        exportedAt: new Date().toISOString(),
+        items: cartToItems().map(x => ({
+          id: x.product.id,
+          name: x.product.name,
+          qty: x.qty,
+          unitPrice: x.product.price,
+          lineTotal: round2(x.qty * x.product.price)
+        })),
+        subtotal: round2(calcSubtotal())
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "royalty-plaza-cart.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast("Cart exported.");
+    });
+
+    btnBrowse.addEventListener("click", () => {
+      document.getElementById("grid").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    btnSeeBundles.addEventListener("click", () => {
+      category.value = "bundles";
+      category.dispatchEvent(new Event("change"));
+      document.getElementById("grid").scrollIntoView({behavior:"smooth", block:"start"});
+      showToast("Showing Bundles.");
+    });
+
+    btnHowItWorks.addEventListener("click", () => {
+      showToast("How it works: Choose a product → Add to cart → Checkout. Next phase: payments + secure downloads.");
+    });
+
+    btnTheme.addEventListener("click", () => {
+      denseUI = !denseUI;
+      saveUI(denseUI);
+      applyDensity();
+      showToast(denseUI ? "Compact layout enabled." : "Comfort layout enabled.");
+    });
+
+    btnSubscribe.addEventListener("click", () => {
+      const v = (nlEmail.value || "").trim();
+      if (!v || !v.includes("@")){
+        nlStatus.textContent = "Please enter a valid email address.";
+        return;
+      }
+      nlStatus.textContent = "Subscribed (demo). Next: connect Mailchimp/ConvertKit.";
+      nlEmail.value = "";
+      showToast("Subscription saved (demo).");
+    });
+
+    // ----- Rendering -----
+    function render(){
+      const query = (q.value || "").trim().toLowerCase();
+      const cat = category.value;
+
+      // Title logic
+      const catLabel = cat === "all" ? "Featured Products" : (cat.charAt(0).toUpperCase() + cat.slice(1));
+      resultsTitle.textContent = catLabel;
+      resultsMeta.textContent = "Showing curated placeholders. Replace with your real products as you finalize them.";
+
+      let list = PRODUCTS.slice();
+
+      // Filter by category
+      if (cat !== "all") list = list.filter(p => p.category === cat);
+
+      // Filter by search
+      if (query){
+        list = list.filter(p => {
+          const hay = [
+            p.name, p.category, (p.tags||[]).join(" "), p.blurb
+          ].join(" ").toLowerCase();
+          return hay.includes(query);
+        });
+      }
+
+      // Sort
+      const s = sort.value;
+      if (s === "price_asc") list.sort((a,b)=>a.price-b.price);
+      else if (s === "price_desc") list.sort((a,b)=>b.price-a.price);
+      else if (s === "newest") list.sort((a,b)=> (new Date(b.createdAt)) - (new Date(a.createdAt)));
+      else if (s === "name") list.sort((a,b)=> a.name.localeCompare(b.name));
+      else {
+        // featured: featured first, then newest
+        list.sort((a,b)=>{
+          if (!!b.featured !== !!a.featured) return (b.featured?1:0) - (a.featured?1:0);
+          return (new Date(b.createdAt)) - (new Date(a.createdAt));
+        });
+      }
+
+      resultsCount.textContent = `${list.length} item${list.length===1?"":"s"}`;
+
+      grid.innerHTML = "";
+      list.forEach(p => grid.appendChild(productCard(p)));
+
+      updateCartBadge();
+    }
+
+    function productCard(p){
+      const el = document.createElement("article");
+      el.className = "card";
+
+      const chipLabel = p.category.toUpperCase();
+      const price = money(p.price);
+
+      el.innerHTML = `
+        <div class="thumb" aria-hidden="true"></div>
+        <div class="content">
+          <div class="title">
+            <span>${escapeHtml(p.name)}</span>
+            <span class="chip">${escapeHtml(chipLabel)}</span>
+          </div>
+          <div class="desc">${escapeHtml(p.blurb || "")}</div>
+          <div class="row">
+            <div>
+              <div class="price">${price}</div>
+              <div class="small">${(p.tags||[]).slice(0,3).map(t=>"#"+t).join(" ")}</div>
+            </div>
+            <div class="btnRow">
+              <button class="btn sm" data-action="details">Details</button>
+              <button class="btn sm primary" data-action="add">Add</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      el.querySelector('[data-action="add"]').addEventListener("click", () => {
+        addToCart(p.id, 1);
+        showToast(`Added: ${p.name}`);
+      });
+
+      el.querySelector('[data-action="details"]').addEventListener("click", () => {
+        const tags = (p.tags||[]).map(t=>"#"+t).join(" ");
+        showToast(`${p.name} — ${money(p.price)} • ${tags || "No tags"}`);
+      });
+
+      return el;
+    }
+
+    // ----- Cart -----
+    function openCart(){
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden", "false");
+      renderCart();
+    }
+    function closeCart(){
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+
+    function addToCart(productId, qty){
+      const cur = Number(cart[productId] || 0);
+      cart[productId] = Math.max(0, cur + qty);
+      if (cart[productId] === 0) delete cart[productId];
+      saveCart(cart);
+      updateCartBadge();
+    }
+
+    function cartToItems(){
+      return Object.entries(cart).map(([id, qty]) => {
+        const product = PRODUCTS.find(p => p.id === id);
+        if (!product) return null;
+        return { product, qty: Number(qty) };
+      }).filter(Boolean);
+    }
+
+    function calcSubtotal(){
+      const items = cartToItems();
+      return items.reduce((sum, x) => sum + (x.qty * x.product.price), 0);
+    }
+
+    function renderCart(){
+      const items = cartToItems();
+
+      if (!items.length){
+        cartList.innerHTML = `
+          <div class="muted">
+            Your cart is empty. Add a product to start.
+          </div>
+        `;
+        subTotal.textContent = money(0);
+        return;
+      }
+
+      cartList.innerHTML = "";
+      items.forEach(({product, qty}) => {
+        const row = document.createElement("div");
+        row.className = "cartItem";
+
+        row.innerHTML = `
+          <div class="left">
+            <div class="name">${escapeHtml(product.name)}</div>
+            <div class="meta">${escapeHtml(product.category.toUpperCase())} • ${money(product.price)} each</div>
+          </div>
+          <div class="right">
+            <div class="qtyRow">
+              <button class="qtyBtn" data-act="dec" title="Decrease">−</button>
+              <div class="qtyVal">${qty}</div>
+              <button class="qtyBtn" data-act="inc" title="Increase">+</button>
+            </div>
+            <div class="meta">Line: <strong style="color:rgba(242,209,132,.95)">${money(qty * product.price)}</strong></div>
+            <div class="dangerLink" data-act="rm">Remove</div>
+          </div>
+        `;
+
+        row.querySelector('[data-act="dec"]').addEventListener("click", () => {
+          addToCart(product.id, -1);
+          renderCart();
+        });
+        row.querySelector('[data-act="inc"]').addEventListener("click", () => {
+          addToCart(product.id, +1);
+          renderCart();
+        });
+        row.querySelector('[data-act="rm"]').addEventListener("click", () => {
+          delete cart[product.id];
+          saveCart(cart);
+          updateCartBadge();
+          renderCart();
+        });
+
+        cartList.appendChild(row);
+      });
+
+      subTotal.textContent = money(calcSubtotal());
+    }
+
+    function updateCartBadge(){
+      const n = Object.values(cart).reduce((a,b)=>a+Number(b), 0);
+      cartCount.textContent = String(n);
+      cartCount.style.display = n > 0 ? "inline-block" : "none";
+    }
+
+    // ----- Local storage -----
+    function loadCart(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        return raw ? JSON.parse(raw) : {};
+      }catch(_){ return {}; }
+    }
+    function saveCart(c){
+      try{ localStorage.setItem(LS_KEY, JSON.stringify(c)); }catch(_){}
+    }
+
+    function loadUI(){
+      try{
+        const raw = localStorage.getItem(LS_UI);
+        return raw ? JSON.parse(raw) : false;
+      }catch(_){ return false; }
+    }
+    function saveUI(v){
+      try{ localStorage.setItem(LS_UI, JSON.stringify(!!v)); }catch(_){}
+    }
+    function applyDensity(){
+      // Dense UI reduces padding slightly for higher information density
+      document.documentElement.style.setProperty("--radius", denseUI ? "16px" : "20px");
+      document.documentElement.style.setProperty("--radius2", denseUI ? "22px" : "28px");
+    }
+
+    // ----- Utilities -----
+    function money(n){
+      const v = Number(n || 0);
+      // Default: USD formatting (adjust later if you want NGN/GBP selector)
+      return v.toLocaleString(undefined, {style:"currency", currency:"USD"});
+    }
+    function round2(n){ return Math.round((Number(n)||0) * 100) / 100; }
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=>toast.classList.remove("show"), 3200);
+    }
+
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // Initial badge
+    updateCartBadge();
+  </script>
+</body>
+</html>
 
