@@ -26,7 +26,7 @@
       blurb:
         "A practical guide for high-school leavers, fresh graduates, and early-career professionals who want a clear financial foundation from day one—earn, budget, save, and start investing safely without confusing jargon.",
       // Put your Amazon “View on Amazon” URL here (paste from KDP “View on Amazon”)
-      amazonUrl: "",
+      amazonUrl: "https://www.amazon.com/dp/B0GGDF9B6W",
       // Optional: put your cover image URL here (see notes below)
       coverUrl: ""
     },
@@ -40,7 +40,7 @@
       createdAt: "2026-01-15",
       blurb:
         "A no-nonsense guide for working professionals who want to legally keep more of what they earn and build long-term financial security through disciplined decisions that compound over time.",
-      amazonUrl: "",
+      amazonUrl: "https://www.amazon.com/dp/B0GGX92PNC",
       coverUrl: ""
     },
 
